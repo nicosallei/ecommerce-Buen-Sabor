@@ -13,6 +13,7 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({
   if (!producto) {
     return <div>Cargando...</div>;
   }
+
   // URL de imagen por defecto
   const imagenPorDefecto = "http://localhost:8080/images/sin-imagen.jpg";
   // Determina la imagen a mostrar
@@ -34,10 +35,13 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: 400,
+          width: "90%", // Ancho del modal ajustado
+          maxWidth: 400, // Ancho máximo del modal
           bgcolor: "background.paper",
           boxShadow: 24,
           p: 4,
+          maxHeight: "90%", // Altura máxima del modal ajustada
+          overflowY: "auto", // Habilita el desplazamiento vertical si el contenido excede el tamaño del modal
         }}
       >
         <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -47,7 +51,12 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({
           component="img"
           image={imagenAMostrar}
           alt="Imagen del producto"
-          sx={{ marginBottom: "20px" }} // Ajusta el estilo según sea necesario
+          sx={{
+            maxHeight: 300,
+            width: "100%",
+            objectFit: "contain",
+            marginBottom: 2,
+          }} // Ajusta el estilo de la imagen según sea necesario
         />
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           {producto.descripcion}

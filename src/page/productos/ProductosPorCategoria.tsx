@@ -116,14 +116,15 @@ const ProductosPorCategoria: React.FC = () => {
         container
         spacing={4}
         justifyContent="center"
-        style={{ marginTop: "20px" }} // Ajusta el margen superior según sea necesario
+        style={{ margin: "0 auto", maxWidth: "1200px" }} // Ajusta el ancho máximo según tu diseño
       >
         {selectedProducts.map((producto) => (
           <Grid item key={producto.id} xs={12} sm={6} md={4}>
             <Card
               sx={{
                 maxWidth: 345,
-                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)",
+                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)", // Efecto de sombra
+                margin: "0 auto", // Centrado horizontal en el contenedor
               }}
             >
               <CardMedia
