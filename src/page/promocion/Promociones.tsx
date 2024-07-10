@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ImagenMenu from "../../assets/img/MenuProductos.jpg";
+import SinImagen from "../../assets/img/sin-imagen.jpg";
 import { getPromocionesActivas } from "../../service/PromocionService"; // Ajusta la importación según tu servicio de promociones
 import Promocion from "../../types/IPromocion"; // Ajusta el tipo de datos según tu modelo de promoción
 
@@ -39,9 +40,11 @@ const Promociones: React.FC = () => {
         // Ajusta las URLs de las imágenes en el JSON
         const promocionesConURL = data.map((promocion: any) => ({
           ...promocion,
-          imagen: `http://localhost:8080/images/${promocion.imagen
-            .split("\\")
-            .pop()}`,
+          imagen: promocion.imagen
+            ? `http://localhost:8080/images/${promocion.imagen
+                .split("\\")
+                .pop()}`
+            : SinImagen, // Si no hay imagen, usar imagen por defecto
         }));
         setPromociones(promocionesConURL);
         setFilteredPromociones(promocionesConURL);
@@ -129,25 +132,28 @@ const Promociones: React.FC = () => {
           <Grid item key={promocion.id} xs={12} sm={6} md={4}>
             <Card
               sx={{
-                maxWidth: 345,
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
                 boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)", // Efecto de sombra
-                margin: "0 auto", // Centrado horizontal en el contenedor
               }}
             >
               <CardMedia
                 component="img"
                 height="140"
-                image={promocion.imagen} // Ajusta la lógica para la imagen según tu JSON
+                image={promocion.imagen || SinImagen} // Mostrar la imagen por defecto si no hay imagen definida
                 alt={promocion.denominacion}
+                sx={{ objectFit: "cover", maxHeight: 140 }}
               />
               <CardContent>
-                <Typography variant="h5" component="div">
+                <Typography variant="h5" component="div" sx={{ minHeight: 80 }}>
                   {promocion.denominacion}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   {promocion.descripcionDescuento}
                 </Typography>
-                <Typography variant="h6">
+                <Typography variant="h6" sx={{ mt: 2 }}>
                   ${promocion.precioPromocional}
                 </Typography>
                 <Button onClick={() => handleOpenModal(promocion)}>
