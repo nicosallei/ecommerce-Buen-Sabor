@@ -1,5 +1,6 @@
 export const getProductosPorCategoria = async (categoriaId: number) => {
   try {
+    console.log(import.meta.env.VITE_API_URL);
     const response = await fetch(
       `${import.meta.env.VITE_API_URL}/api/compra/productos/${categoriaId}`,
       {
