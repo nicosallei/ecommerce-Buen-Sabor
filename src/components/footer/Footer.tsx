@@ -6,12 +6,15 @@ const Footer: React.FC = () => {
     <Box
       sx={{
         width: "100%",
-        position: "fixed",
-        bottom: 0,
+        position: "static",
         textAlign: "center",
-        padding: 2,
+        padding: 0,
+        height: "64px",
         backgroundColor: "primary.main",
         color: "white",
+        display: "flex", // Añade flexbox
+        alignItems: "center", // Centra verticalmente
+        justifyContent: "center", // Centra horizontalmente
       }}
     >
       <Typography variant="body1">

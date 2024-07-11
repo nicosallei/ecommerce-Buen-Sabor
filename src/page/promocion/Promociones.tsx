@@ -141,7 +141,13 @@ const Promociones: React.FC = () => {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
-                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)", // Efecto de sombra
+                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)", // Efecto de sombra existente
+                transition:
+                  "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out", // Añade una transición suave
+                "&:hover": {
+                  transform: "scale(1.05)", // Efecto de zoom al pasar el cursor
+                  boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.3)", // Aumenta la sombra para dar sensación de elevación
+                },
               }}
             >
               <CardMedia
@@ -151,19 +157,7 @@ const Promociones: React.FC = () => {
                 alt={promocion.denominacion}
                 sx={{ objectFit: "cover", maxHeight: 180 }}
               />
-              <CardContent
-                sx={{
-                  padding: "8px",
-                  "&:last-child": { paddingBottom: "8px" },
-                }}
-              >
-                <Typography
-                  variant="h5"
-                  component="div"
-                  sx={{ minHeight: 40, marginBottom: "4px" }}
-                >
-                  {promocion.denominacion}
-                </Typography>
+              <CardContent>
                 <Typography
                   variant="body2"
                   color="text.secondary"
@@ -174,9 +168,29 @@ const Promociones: React.FC = () => {
                 <Typography variant="h6" sx={{ marginBottom: "8px" }}>
                   ${promocion.precioPromocional}
                 </Typography>
-                <Button onClick={() => handleOpenModal(promocion)} size="small">
-                  Detalle
-                </Button>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    width: "100%",
+                  }}
+                >
+                  <Button
+                    onClick={() => handleOpenModal(promocion)}
+                    size="small"
+                    sx={{
+                      mt: 2,
+                      bgcolor: "grey.300",
+                      color: "black",
+                      ":hover": {
+                        bgcolor: "grey.400",
+                      },
+                      transition: "0.3s",
+                    }}
+                  >
+                    Detalle
+                  </Button>
+                </Box>
               </CardContent>
             </Card>
           </Grid>
@@ -224,7 +238,7 @@ const Promociones: React.FC = () => {
                   promocionSeleccionada.imagen ||
                   "http://localhost:8080/images/imagen_por_defecto.jpg"
                 }
-                style={{ width: 128, height: 128, margin: "auto" }} // Ajusta el tamaño y la posición según necesites
+                style={{ width: 128, height: 128, margin: "auto" }}
               />
               <Typography variant="h6" id="modal-title" gutterBottom>
                 {promocionSeleccionada.denominacion}
@@ -279,7 +293,20 @@ const Promociones: React.FC = () => {
               </List>
             </>
           )}
-          <Button onClick={handleCloseModal}>Cerrar</Button>
+          <Button
+            onClick={handleCloseModal}
+            sx={{
+              mt: 2,
+              bgcolor: "primary.main",
+              color: "white",
+              ":hover": {
+                bgcolor: "primary.dark",
+              },
+              float: "right",
+            }}
+          >
+            Cerrar
+          </Button>
         </Box>
       </Modal>
     </Box>

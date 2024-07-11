@@ -127,6 +127,12 @@ const Productos: React.FC = () => {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
+                transition:
+                  "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out", // Añade una transición suave
+                "&:hover": {
+                  transform: "scale(1.05)", // Efecto de zoom al pasar el cursor
+                  boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.25)", // Aumenta la sombra para dar sensación de elevación
+                },
               }}
               onClick={() => handleCardClick(category.id)}
             >

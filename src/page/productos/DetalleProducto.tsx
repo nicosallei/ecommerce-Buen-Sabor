@@ -44,9 +44,6 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({
           overflowY: "auto", // Habilita el desplazamiento vertical si el contenido excede el tamaño del modal
         }}
       >
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          {producto.denominacion}
-        </Typography>
         <CardMedia
           component="img"
           image={imagenAMostrar}
@@ -58,20 +55,47 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({
             marginBottom: 2,
           }} // Ajusta el estilo de la imagen según sea necesario
         />
+        <Typography
+          id="modal-modal-title"
+          variant="h6"
+          component="h2"
+          sx={{
+            textAlign: "center", // Centra el texto
+            fontWeight: "bold", // Opcional: hace el texto más grueso para darle énfasis
+            marginBottom: 2, // Agrega un margen inferior para separarlo del contenido siguiente
+          }}
+        >
+          {producto.denominacion}
+        </Typography>
+        <Typography
+          variant="body1"
+          sx={{
+            color: "green", // Cambia el color del texto a verde
+            fontSize: "1.25rem", // Aumenta el tamaño del texto
+          }}
+        >
+          Precio: ${producto.precioVenta}
+        </Typography>
+        <Typography variant="body1">
+          Tiempo de preparacion: {producto.tiempoEstimadoMinutos} minutos
+        </Typography>
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          {producto.descripcion}
+          Descripcion: {producto.descripcion}
         </Typography>
-        <Typography variant="body1">Código: {producto.codigo}</Typography>
-        <Typography variant="body1">
-          Precio de venta: {producto.precioVenta}
-        </Typography>
-        <Typography variant="body1">
-          Categoría: {producto.categoriaId}
-        </Typography>
-        <Typography variant="body1">Sucursal: {producto.sucursalId}</Typography>
-        {/* Aquí puedes agregar más detalles del producto según sea necesario */}
-        <Box sx={{ mt: 2 }}>
-          <Button onClick={onClose}>Cerrar</Button>
+
+        <Box sx={{ mt: 2, display: "flex", justifyContent: "flex-end" }}>
+          <Button
+            onClick={onClose}
+            sx={{
+              bgcolor: "primary.main", // Color de fondo primario
+              color: "white", // Color del texto
+              ":hover": {
+                bgcolor: "primary.dark", // Color de fondo al pasar el cursor
+              },
+            }}
+          >
+            Cerrar
+          </Button>
         </Box>
       </Box>
     </Modal>

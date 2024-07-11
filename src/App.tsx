@@ -8,7 +8,7 @@ const App: React.FC = () => {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
-      <Box sx={{ flex: 1 }}>
+      <Box sx={{ flex: 1, paddingTop: "64px" }}>
         <Rutas />
       </Box>
       <Footer />

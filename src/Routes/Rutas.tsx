@@ -14,8 +14,7 @@ const Rutas: React.FC = () => {
       <Route
         path="/categoria/:categoryId"
         element={<ProductosPorCategoria />}
-      />{" "}
-      {/* Nueva ruta */}
+      />
     </Routes>
   );
 };
