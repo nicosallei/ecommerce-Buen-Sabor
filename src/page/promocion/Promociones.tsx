@@ -24,6 +24,7 @@ import SinImagen from "../../assets/img/sin-imagen.jpg";
 import { getPromocionesActivas } from "../../service/PromocionService"; // Ajusta la importación según tu servicio de promociones
 import Promocion from "../../types/IPromocion"; // Ajusta el tipo de datos según tu modelo de promoción
 import LoadingComponent from "../../components/loading/loadingComponent";
+import imagenPorDefecto from "../../assets/img/sin-imagen.jpg"; // URL de imagen por defecto
 
 const Promociones: React.FC = () => {
   const [promociones, setPromociones] = useState<Promocion[]>([]);
@@ -271,10 +272,7 @@ const Promociones: React.FC = () => {
                     const procesarUrlImagen = (url: any) => {
                       if (!url) {
                         // Proporciona la URL de una imagen por defecto
-                        return (
-                          import.meta.env.VITE_API_URL +
-                          "/images/imagen_por_defecto.jpg"
-                        );
+                        return imagenPorDefecto;
                       }
                       return `${import.meta.env.VITE_API_URL}/images/${url
                         .split("\\")
