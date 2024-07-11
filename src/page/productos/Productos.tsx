@@ -119,8 +119,10 @@ const Productos: React.FC = () => {
                 height: 200,
                 cursor: "pointer",
                 backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${
-                  category.image ||
-                  "http://localhost:8080/images/sin-imagen.jpg"
+                  category.urlIcono?.replace(
+                    "src\\main\\resources\\images\\",
+                    "http://localhost:8080/images/"
+                  ) || "http://localhost:8080/images/sin-imagen.jpg"
                 })`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
@@ -128,10 +130,10 @@ const Productos: React.FC = () => {
                 flexDirection: "column",
                 justifyContent: "center",
                 transition:
-                  "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out", // Añade una transición suave
+                  "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out",
                 "&:hover": {
-                  transform: "scale(1.05)", // Efecto de zoom al pasar el cursor
-                  boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.25)", // Aumenta la sombra para dar sensación de elevación
+                  transform: "scale(1.05)",
+                  boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.25)",
                 },
               }}
               onClick={() => handleCardClick(category.id)}
