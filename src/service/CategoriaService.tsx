@@ -5,7 +5,6 @@ export const fetchCategories = async () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
       mode: "cors",
     }

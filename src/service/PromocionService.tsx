@@ -6,18 +6,19 @@ export const getPromocionesActivas = async () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
         },
         mode: "cors",
       }
     );
     if (!response.ok) {
-      throw new Error("Error al obtener los productos por categoría");
+      // Actualizado para reflejar el propósito real de la función
+      throw new Error("Error al obtener las promociones activas");
     }
     const data = await response.json();
     return data;
   } catch (error) {
     console.error("Error:", error);
+    // Considera devolver algo más específico para la UI, como un objeto de error
     return null;
   }
 };
