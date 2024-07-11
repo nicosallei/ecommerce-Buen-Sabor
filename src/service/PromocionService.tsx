@@ -1,7 +1,7 @@
 export const getPromocionesActivas = async () => {
   try {
     const response = await fetch(
-      `http://localhost:8080/api/local/promocion/activas`
+      `${import.meta.env.VITE_API_URL}/api/local/promocion/activas`
     );
     if (!response.ok) {
       throw new Error("Error al obtener los productos por categoría");

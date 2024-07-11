@@ -138,8 +138,10 @@ const ProductosPorCategoria: React.FC = () => {
                 height="140"
                 image={
                   producto.imagenes.length > 0
-                    ? "http://localhost:8080/images/" + producto.imagenes[0].url
-                    : "http://localhost:8080/images/sin-imagen.jpg"
+                    ? import.meta.env.VITE_API_URL +
+                      "/images/" +
+                      producto.imagenes[0].url
+                    : import.meta.env.VITE_API_URL + "/images/sin-imagen.jpg"
                 }
                 alt={producto.denominacion}
               />

@@ -15,11 +15,12 @@ const DetalleProducto: React.FC<DetalleProductoProps> = ({
   }
 
   // URL de imagen por defecto
-  const imagenPorDefecto = "http://localhost:8080/images/sin-imagen.jpg";
+  const imagenPorDefecto =
+    import.meta.env.VITE_API_URL + "/images/sin-imagen.jpg";
   // Determina la imagen a mostrar
   const imagenAMostrar =
     producto.imagenes && producto.imagenes.length > 0
-      ? "http://localhost:8080/images/" + producto.imagenes[0].url
+      ? import.meta.env.VITE_API_URL + "/images/" + producto.imagenes[0].url
       : imagenPorDefecto;
 
   return (

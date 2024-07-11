@@ -1,7 +1,7 @@
 export const getProductosPorCategoria = async (categoriaId: number) => {
   try {
     const response = await fetch(
-      `http://localhost:8080/api/compra/productos/${categoriaId}`
+      `${import.meta.env.VITE_API_URL}/api/compra/productos/${categoriaId}`
     );
     if (!response.ok) {
       throw new Error("Error al obtener los productos por categoría");

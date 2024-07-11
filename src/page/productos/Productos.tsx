@@ -121,8 +121,8 @@ const Productos: React.FC = () => {
                 backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${
                   category.urlIcono?.replace(
                     "src\\main\\resources\\images\\",
-                    "http://localhost:8080/images/"
-                  ) || "http://localhost:8080/images/sin-imagen.jpg"
+                    import.meta.env.VITE_API_URL + "/images/"
+                  ) || import.meta.env.VITE_API_URL + "/images/sin-imagen.jpg"
                 })`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
