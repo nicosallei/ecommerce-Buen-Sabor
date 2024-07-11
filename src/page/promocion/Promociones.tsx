@@ -23,6 +23,7 @@ import ImagenMenu from "../../assets/img/MenuProductos.jpg";
 import SinImagen from "../../assets/img/sin-imagen.jpg";
 import { getPromocionesActivas } from "../../service/PromocionService"; // Ajusta la importación según tu servicio de promociones
 import Promocion from "../../types/IPromocion"; // Ajusta el tipo de datos según tu modelo de promoción
+import LoadingComponent from "../../components/loading/loadingComponent";
 
 const Promociones: React.FC = () => {
   const [promociones, setPromociones] = useState<Promocion[]>([]);
@@ -41,7 +42,9 @@ const Promociones: React.FC = () => {
   useEffect(() => {
     const fetchPromociones = async () => {
       try {
-        const data = await getPromocionesActivas(); // Utiliza tu función para obtener promociones
+        const data: Promocion[] = await new Promise((resolve) =>
+          setTimeout(() => resolve(getPromocionesActivas()), 2000)
+        );
         // Ajusta las URLs de las imágenes en el JSON
         const promocionesConURL = data.map((promocion: any) => ({
           ...promocion,
@@ -62,6 +65,10 @@ const Promociones: React.FC = () => {
 
     fetchPromociones();
   }, []);
+
+  if (loading) {
+    return <LoadingComponent />;
+  }
 
   useEffect(() => {
     const filtered = promociones.filter((promocion) =>
