@@ -123,8 +123,14 @@ const ProductosPorCategoria: React.FC = () => {
             <Card
               sx={{
                 maxWidth: 345,
-                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)", // Efecto de sombra
-                margin: "0 auto", // Centrado horizontal en el contenedor
+                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)", // Efecto de sombra existente
+                margin: "0 auto", // Centrado horizontal existente
+                transition:
+                  "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out", // Añade una transición suave
+                "&:hover": {
+                  transform: "scale(1.05)", // Efecto de zoom al pasar el cursor
+                  boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.3)", // Aumenta la sombra para dar sensación de elevación
+                },
               }}
             >
               <CardMedia
@@ -145,7 +151,19 @@ const ProductosPorCategoria: React.FC = () => {
                   {producto.descripcion}
                 </Typography>
                 <Typography variant="h6">${producto.precioVenta}</Typography>
-                <Button onClick={() => handleOpenModal(producto)}>
+                <Button
+                  onClick={() => handleOpenModal(producto)}
+                  sx={{
+                    mt: 2, // Margen superior para separarlo del contenido anterior
+                    bgcolor: "grey.300", // Color de fondo gris
+                    color: "black", // Color del texto
+                    ":hover": {
+                      bgcolor: "grey.400", // Color de fondo al pasar el cursor
+                    },
+                    display: "block", // Hace que el botón ocupe todo el ancho disponible
+                    mx: "auto", // Centra el botón horizontalmente
+                  }}
+                >
                   Detalle
                 </Button>
               </CardContent>

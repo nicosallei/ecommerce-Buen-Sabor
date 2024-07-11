@@ -12,6 +12,11 @@ import {
   TextField,
   InputAdornment,
   Modal,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Avatar,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ImagenMenu from "../../assets/img/MenuProductos.jpg";
@@ -136,29 +141,56 @@ const Promociones: React.FC = () => {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
-                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)", // Efecto de sombra
+                boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)", // Efecto de sombra existente
+                transition:
+                  "transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out", // Añade una transición suave
+                "&:hover": {
+                  transform: "scale(1.05)", // Efecto de zoom al pasar el cursor
+                  boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.3)", // Aumenta la sombra para dar sensación de elevación
+                },
               }}
             >
               <CardMedia
                 component="img"
-                height="140"
+                height="180"
                 image={promocion.imagen || SinImagen} // Mostrar la imagen por defecto si no hay imagen definida
                 alt={promocion.denominacion}
-                sx={{ objectFit: "cover", maxHeight: 140 }}
+                sx={{ objectFit: "cover", maxHeight: 180 }}
               />
               <CardContent>
-                <Typography variant="h5" component="div" sx={{ minHeight: 80 }}>
-                  {promocion.denominacion}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ marginBottom: "4px" }}
+                >
                   {promocion.descripcionDescuento}
                 </Typography>
-                <Typography variant="h6" sx={{ mt: 2 }}>
+                <Typography variant="h6" sx={{ marginBottom: "8px" }}>
                   ${promocion.precioPromocional}
                 </Typography>
-                <Button onClick={() => handleOpenModal(promocion)}>
-                  Detalle
-                </Button>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    width: "100%",
+                  }}
+                >
+                  <Button
+                    onClick={() => handleOpenModal(promocion)}
+                    size="small"
+                    sx={{
+                      mt: 2,
+                      bgcolor: "grey.300",
+                      color: "black",
+                      ":hover": {
+                        bgcolor: "grey.400",
+                      },
+                      transition: "0.3s",
+                    }}
+                  >
+                    Detalle
+                  </Button>
+                </Box>
               </CardContent>
             </Card>
           </Grid>
@@ -200,21 +232,81 @@ const Promociones: React.FC = () => {
         >
           {promocionSeleccionada && (
             <>
+              <Avatar
+                alt="Imagen de la Promoción"
+                src={
+                  promocionSeleccionada.imagen ||
+                  "http://localhost:8080/images/imagen_por_defecto.jpg"
+                }
+                style={{ width: 128, height: 128, margin: "auto" }}
+              />
               <Typography variant="h6" id="modal-title" gutterBottom>
-                Detalle de Promoción
+                {promocionSeleccionada.denominacion}
               </Typography>
               <Typography variant="body2" id="modal-description">
-                <strong>Nombre:</strong> {promocionSeleccionada.denominacion}
                 <br />
                 <strong>Descripción:</strong>{" "}
                 {promocionSeleccionada.descripcionDescuento}
                 <br />
-                <strong>Precio Promocional:</strong> $
-                {promocionSeleccionada.precioPromocional}
+                <span style={{ color: "green", fontSize: "1.1rem" }}>
+                  <strong>Precio:</strong> $
+                  {promocionSeleccionada.precioPromocional}
+                </span>
               </Typography>
+              <Typography variant="body2" gutterBottom>
+                Productos:
+              </Typography>
+              <List>
+                {promocionSeleccionada.promocionDetallesDto.map(
+                  (detalle: any, index: any) => {
+                    // Función para procesar la URL de la imagen
+                    const procesarUrlImagen = (url: any) => {
+                      if (!url) {
+                        // Proporciona la URL de una imagen por defecto
+                        return "http://localhost:8080/images/imagen_por_defecto.jpg";
+                      }
+                      return `http://localhost:8080/images/${url
+                        .split("\\")
+                        .pop()}`;
+                    };
+
+                    return (
+                      <ListItem key={index} alignItems="flex-start">
+                        <ListItemAvatar>
+                          <Avatar
+                            alt="Artículo"
+                            src={procesarUrlImagen(
+                              detalle.articuloManufacturadoDto.imagenes[0]?.url
+                            )}
+                          />
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={
+                            detalle.articuloManufacturadoDto.denominacion
+                          }
+                          secondary={`Cantidad: ${detalle.cantidad}`}
+                        />
+                      </ListItem>
+                    );
+                  }
+                )}
+              </List>
             </>
           )}
-          <Button onClick={handleCloseModal}>Cerrar</Button>
+          <Button
+            onClick={handleCloseModal}
+            sx={{
+              mt: 2,
+              bgcolor: "primary.main",
+              color: "white",
+              ":hover": {
+                bgcolor: "primary.dark",
+              },
+              float: "right",
+            }}
+          >
+            Cerrar
+          </Button>
         </Box>
       </Modal>
     </Box>
