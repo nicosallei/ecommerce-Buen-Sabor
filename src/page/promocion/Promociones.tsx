@@ -46,7 +46,7 @@ const Promociones: React.FC = () => {
         const promocionesConURL = data.map((promocion: any) => ({
           ...promocion,
           imagen: promocion.imagen
-            ? `http://localhost:8080/images/${promocion.imagen
+            ? `${import.meta.env.VITE_API_URL}/images/${promocion.imagen
                 .split("\\")
                 .pop()}`
             : SinImagen, // Si no hay imagen, usar imagen por defecto
@@ -236,7 +236,8 @@ const Promociones: React.FC = () => {
                 alt="Imagen de la Promoción"
                 src={
                   promocionSeleccionada.imagen ||
-                  "http://localhost:8080/images/imagen_por_defecto.jpg"
+                  import.meta.env.VITE_API_URL +
+                    "/images/imagen_por_defecto.jpg"
                 }
                 style={{ width: 128, height: 128, margin: "auto" }}
               />
@@ -263,9 +264,12 @@ const Promociones: React.FC = () => {
                     const procesarUrlImagen = (url: any) => {
                       if (!url) {
                         // Proporciona la URL de una imagen por defecto
-                        return "http://localhost:8080/images/imagen_por_defecto.jpg";
+                        return (
+                          import.meta.env.VITE_API_URL +
+                          "/images/imagen_por_defecto.jpg"
+                        );
                       }
-                      return `http://localhost:8080/images/${url
+                      return `${import.meta.env.VITE_API_URL}/images/${url
                         .split("\\")
                         .pop()}`;
                     };
