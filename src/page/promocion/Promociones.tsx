@@ -12,6 +12,11 @@ import {
   TextField,
   InputAdornment,
   Modal,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Avatar,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import ImagenMenu from "../../assets/img/MenuProductos.jpg";
@@ -141,22 +146,35 @@ const Promociones: React.FC = () => {
             >
               <CardMedia
                 component="img"
-                height="140"
+                height="180"
                 image={promocion.imagen || SinImagen} // Mostrar la imagen por defecto si no hay imagen definida
                 alt={promocion.denominacion}
-                sx={{ objectFit: "cover", maxHeight: 140 }}
+                sx={{ objectFit: "cover", maxHeight: 180 }}
               />
-              <CardContent>
-                <Typography variant="h5" component="div" sx={{ minHeight: 80 }}>
+              <CardContent
+                sx={{
+                  padding: "8px",
+                  "&:last-child": { paddingBottom: "8px" },
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  component="div"
+                  sx={{ minHeight: 40, marginBottom: "4px" }}
+                >
                   {promocion.denominacion}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ marginBottom: "4px" }}
+                >
                   {promocion.descripcionDescuento}
                 </Typography>
-                <Typography variant="h6" sx={{ mt: 2 }}>
+                <Typography variant="h6" sx={{ marginBottom: "8px" }}>
                   ${promocion.precioPromocional}
                 </Typography>
-                <Button onClick={() => handleOpenModal(promocion)}>
+                <Button onClick={() => handleOpenModal(promocion)} size="small">
                   Detalle
                 </Button>
               </CardContent>
@@ -200,18 +218,65 @@ const Promociones: React.FC = () => {
         >
           {promocionSeleccionada && (
             <>
+              <Avatar
+                alt="Imagen de la Promoción"
+                src={
+                  promocionSeleccionada.imagen ||
+                  "http://localhost:8080/images/imagen_por_defecto.jpg"
+                }
+                style={{ width: 128, height: 128, margin: "auto" }} // Ajusta el tamaño y la posición según necesites
+              />
               <Typography variant="h6" id="modal-title" gutterBottom>
-                Detalle de Promoción
+                {promocionSeleccionada.denominacion}
               </Typography>
               <Typography variant="body2" id="modal-description">
-                <strong>Nombre:</strong> {promocionSeleccionada.denominacion}
                 <br />
                 <strong>Descripción:</strong>{" "}
                 {promocionSeleccionada.descripcionDescuento}
                 <br />
-                <strong>Precio Promocional:</strong> $
-                {promocionSeleccionada.precioPromocional}
+                <span style={{ color: "green", fontSize: "1.1rem" }}>
+                  <strong>Precio:</strong> $
+                  {promocionSeleccionada.precioPromocional}
+                </span>
               </Typography>
+              <Typography variant="body2" gutterBottom>
+                Productos:
+              </Typography>
+              <List>
+                {promocionSeleccionada.promocionDetallesDto.map(
+                  (detalle: any, index: any) => {
+                    // Función para procesar la URL de la imagen
+                    const procesarUrlImagen = (url: any) => {
+                      if (!url) {
+                        // Proporciona la URL de una imagen por defecto
+                        return "http://localhost:8080/images/imagen_por_defecto.jpg";
+                      }
+                      return `http://localhost:8080/images/${url
+                        .split("\\")
+                        .pop()}`;
+                    };
+
+                    return (
+                      <ListItem key={index} alignItems="flex-start">
+                        <ListItemAvatar>
+                          <Avatar
+                            alt="Artículo"
+                            src={procesarUrlImagen(
+                              detalle.articuloManufacturadoDto.imagenes[0]?.url
+                            )}
+                          />
+                        </ListItemAvatar>
+                        <ListItemText
+                          primary={
+                            detalle.articuloManufacturadoDto.denominacion
+                          }
+                          secondary={`Cantidad: ${detalle.cantidad}`}
+                        />
+                      </ListItem>
+                    );
+                  }
+                )}
+              </List>
             </>
           )}
           <Button onClick={handleCloseModal}>Cerrar</Button>
